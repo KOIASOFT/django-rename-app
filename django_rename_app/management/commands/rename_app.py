@@ -10,7 +10,6 @@ from django.core.management.base import BaseCommand
 from django.db import connection, ProgrammingError
 from django.db.backends.utils import truncate_name
 from django.db.transaction import atomic
-from django.apps import apps
 
 logger = logging.getLogger(__name__)
 
@@ -179,7 +178,7 @@ class Command(BaseCommand):
 
                     for index in indexes:
                         new_name = truncate_name(
-                            f"{new_table_name}{index[len(old_table_name):]}",
+                            f"{new_app_name}{index[len(old_app_name):]}",
                             connection.ops.max_name_length(),
                         )
                         query = f"ALTER INDEX {index} " f"RENAME TO {new_name}"
